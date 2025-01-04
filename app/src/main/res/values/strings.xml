@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">HarryPotterMC</string>
+    <string name="loading">Loading...</string>
+    <string name="failed_loading">Failed to load</string>
 </resources>
