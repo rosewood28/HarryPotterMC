@@ -10,6 +10,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
@@ -23,8 +25,13 @@ fun HarryPotterApp() {
         modifier = Modifier.fillMaxSize()
     ) {
         val hpViewModel: HpViewModel = viewModel(factory = HpViewModel.Factory)
+
+        // Collect StateFlow as State
+        val hpUiState by hpViewModel.hpUiState.collectAsState()
+
+        // Pass the collected state to HomeScreen
         HomeScreen(
-            hpUiState = hpViewModel.hpUiState,
+            hpUiState = hpUiState,
         )
     }
 

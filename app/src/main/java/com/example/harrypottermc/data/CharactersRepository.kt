@@ -11,7 +11,7 @@ interface CharactersRepository {
 }
 
 /**
- * Network Implementation of Repository that fetch character data list from HP-API.
+ * Network Implementation of Repository that fetches character data list from HP-API.
  */
 class NetworkCharactersRepository (
     private val hpApiService: HPApiService

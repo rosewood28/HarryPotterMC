@@ -1,8 +1,5 @@
 package com.example.harrypottermc.ui.screens
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
@@ -11,6 +8,8 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.harrypottermc.HarryPotterApplication
 import com.example.harrypottermc.data.CharactersRepository
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import java.io.IOException
@@ -25,9 +24,9 @@ sealed interface HpUiState {
 }
 
 class HpViewModel(private val hpCharactersRepository: CharactersRepository): ViewModel() {
-    /** The mutable State that stores the status of the most recent request */
-    var hpUiState: HpUiState by mutableStateOf(HpUiState.Loading)
-        private set
+    /** The MutableStateFlow that stores the status of the most recent request */
+    private val _hpUiState = MutableStateFlow<HpUiState>(HpUiState.Loading)
+    val hpUiState: StateFlow<HpUiState> = _hpUiState
 
     /**
      * Call getCharacters() on init so we can display status immediately.
@@ -41,12 +40,12 @@ class HpViewModel(private val hpCharactersRepository: CharactersRepository): Vie
      */
     fun getHpCharacters() {
         viewModelScope.launch {
-            hpUiState = HpUiState.Loading
-            hpUiState = try {
-                val listResult = hpCharactersRepository.getCharacters()
+            _hpUiState.value = HpUiState.Loading
+            _hpUiState.value = try {
+                val charactersList = hpCharactersRepository.getCharacters()
                 HpUiState.Success(
-                    "Success: ${listResult.size} Harry Potter Characters retrieved: " +
-                            "${listResult[0]}"
+                    "Success: ${charactersList.size} Harry Potter Characters retrieved: " +
+                            "${charactersList[0]}"
                 )
             } catch (e: IOException) {
                 HpUiState.Error
