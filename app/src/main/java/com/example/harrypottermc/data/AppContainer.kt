@@ -1,5 +1,6 @@
 package com.example.harrypottermc.data
 
+import android.content.Context
 import com.example.harrypottermc.network.HPApiService
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.json.Json
@@ -10,7 +11,7 @@ import retrofit2.Retrofit
  * Dependency Injection container at the application level.
  */
 interface AppContainer {
-    val charactersRepository: CharactersRepository
+    val apiHpCharactersRepository: ApiHpCharactersRepository
 }
 
 /**
@@ -36,9 +37,9 @@ class DefaultAppContainer : AppContainer {
     }
 
     /**
-     * DI implementation for Characters repository
+     * DI implementation for HpCharacters repository
      */
-    override val charactersRepository: CharactersRepository by lazy {
-        NetworkCharactersRepository(retrofitService)
+    override val apiHpCharactersRepository: ApiHpCharactersRepository by lazy {
+        NetworkHpCharactersRepository(retrofitService)
     }
 }

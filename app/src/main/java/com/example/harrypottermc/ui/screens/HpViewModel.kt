@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.harrypottermc.HarryPotterApplication
-import com.example.harrypottermc.data.CharactersRepository
+import com.example.harrypottermc.data.ApiHpCharactersRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -23,13 +23,13 @@ sealed interface HpUiState {
     object Loading : HpUiState
 }
 
-class HpViewModel(private val hpCharactersRepository: CharactersRepository): ViewModel() {
+class HpViewModel(private val apiHpCharactersRepository: ApiHpCharactersRepository): ViewModel() {
     /** The MutableStateFlow that stores the status of the most recent request */
     private val _hpUiState = MutableStateFlow<HpUiState>(HpUiState.Loading)
     val hpUiState: StateFlow<HpUiState> = _hpUiState
 
     /**
-     * Call getCharacters() on init so we can display status immediately.
+     * Call getHpCharacters() on init so we can display status immediately.
      */
     init {
         getHpCharacters()
@@ -42,9 +42,9 @@ class HpViewModel(private val hpCharactersRepository: CharactersRepository): Vie
         viewModelScope.launch {
             _hpUiState.value = HpUiState.Loading
             _hpUiState.value = try {
-                val charactersList = hpCharactersRepository.getCharacters()
+                val charactersList = apiHpCharactersRepository.getHpCharacters()
                 HpUiState.Success(
-                    "Success: ${charactersList.size} Harry Potter Characters retrieved: " +
+                    "Success: ${charactersList.size} Harry Potter HpCharacters retrieved: " +
                             "${charactersList[0]}"
                 )
             } catch (e: IOException) {
@@ -56,14 +56,14 @@ class HpViewModel(private val hpCharactersRepository: CharactersRepository): Vie
     }
 
     /**
-     * Factory for [HpViewModel] that takes [hpCharactersRepository] as a dependency
+     * Factory for [HpViewModel] that takes [apiHpCharactersRepository] as a dependency
      */
     companion object {
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
                 val application = (this[APPLICATION_KEY] as HarryPotterApplication)
-                val hpCharactersRepository = application.container.charactersRepository
-                HpViewModel(hpCharactersRepository = hpCharactersRepository)
+                val apiHpCharactersRepository = application.container.apiHpCharactersRepository
+                HpViewModel(apiHpCharactersRepository = apiHpCharactersRepository)
             }
         }
     }
