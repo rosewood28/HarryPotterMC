@@ -11,8 +11,9 @@ import retrofit2.Retrofit
  * Dependency Injection container at the application level.
  */
 interface AppContainer {
-    val apiHpCharactersRepository: ApiHpCharactersRepository
-    val roomHpCharactersRepository: RoomHpCharactersRepository
+    val hpCharactersRepository: HpCharactersRepository
+//    val apiHpCharactersRepository: ApiHpCharactersRepository
+//    val roomHpCharactersRepository: RoomHpCharactersRepository
 }
 
 /**
@@ -28,9 +29,9 @@ class DefaultAppContainer(private val context: Context) : AppContainer {
 
     private val hpCharacterDao = hpCharactersDatabase.hpCharacterDao()
 
-    override val roomHpCharactersRepository: RoomHpCharactersRepository by lazy {
-        OfflineHpCharactersRepository(hpCharacterDao)
-    }
+//    override val roomHpCharactersRepository: RoomHpCharactersRepository by lazy {
+//        OfflineHpCharactersRepository(hpCharacterDao)
+//    }
 
     //Retrofit setup
     private val baseUrl = "https://hp-api.herokuapp.com/"
@@ -53,9 +54,44 @@ class DefaultAppContainer(private val context: Context) : AppContainer {
     /**
      * DI implementation for HpCharacters repository
      */
-    override val apiHpCharactersRepository: ApiHpCharactersRepository by lazy {
-        NetworkHpCharactersRepository(retrofitService)
+    override val hpCharactersRepository: HpCharactersRepository by lazy {
+        HpCharactersRepository(hpCharacterDao ,retrofitService)
     }
+//    // Room setup
+//    private val hpCharactersDatabase: HpCharactersDatabase by lazy {
+//        HpCharactersDatabase.getDatabase(context)
+//    }
+//
+//    private val hpCharacterDao = hpCharactersDatabase.hpCharacterDao()
+//
+//    override val roomHpCharactersRepository: RoomHpCharactersRepository by lazy {
+//        OfflineHpCharactersRepository(hpCharacterDao)
+//    }
+//
+//    //Retrofit setup
+//    private val baseUrl = "https://hp-api.herokuapp.com/"
+//
+//    /**
+//     * Use the Retrofit builder to build a retrofit object using a kotlinx.serialization converter
+//     */
+//    private val retrofit: Retrofit = Retrofit.Builder()
+//        .addConverterFactory(Json.asConverterFactory("application/json".toMediaType()))
+//        .baseUrl(baseUrl)
+//        .build()
+//
+//    /**
+//     * Retrofit service object for creating api calls
+//     */
+//    private val retrofitService: HPApiService by lazy {
+//        retrofit.create(HPApiService::class.java)
+//    }
+//
+//    /**
+//     * DI implementation for HpCharacters repository
+//     */
+//    override val apiHpCharactersRepository: ApiHpCharactersRepository by lazy {
+//        NetworkHpCharactersRepository(retrofitService)
+//    }
 
 
 }

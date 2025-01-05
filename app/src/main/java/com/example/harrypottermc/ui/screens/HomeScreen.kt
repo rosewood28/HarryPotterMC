@@ -35,18 +35,6 @@ fun HomeScreen(
 }
 
 /**
- * The home screen displaying the loading message.
- */
-@Composable
-fun LoadingScreen(modifier: Modifier = Modifier) {
-    Image(
-        modifier = modifier.size(200.dp),
-        painter = painterResource(R.drawable.loading_img),
-        contentDescription = stringResource(R.string.loading)
-    )
-}
-
-/**
  * ResultScreen displaying number of photos retrieved.
  */
 @Composable
@@ -57,6 +45,18 @@ fun ResultScreen(characters: String, modifier: Modifier = Modifier) {
     ) {
         Text(text = characters)
     }
+}
+
+/**
+ * The home screen displaying the loading message.
+ */
+@Composable
+fun LoadingScreen(modifier: Modifier = Modifier) {
+    Image(
+        modifier = modifier.size(200.dp),
+        painter = painterResource(R.drawable.loading_img),
+        contentDescription = stringResource(R.string.loading)
+    )
 }
 
 /**

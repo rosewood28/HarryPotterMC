@@ -8,8 +8,11 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.harrypottermc.HarryPotterApplication
 import com.example.harrypottermc.data.ApiHpCharactersRepository
+import com.example.harrypottermc.data.HpCharactersRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import java.io.IOException
@@ -23,7 +26,9 @@ sealed interface HpUiState {
     object Loading : HpUiState
 }
 
-class HpViewModel(private val apiHpCharactersRepository: ApiHpCharactersRepository): ViewModel() {
+class HpViewModel(
+    private val hpCharactersRepository: HpCharactersRepository
+): ViewModel() {
     /** The MutableStateFlow that stores the status of the most recent request */
     private val _hpUiState = MutableStateFlow<HpUiState>(HpUiState.Loading)
     val hpUiState: StateFlow<HpUiState> = _hpUiState
@@ -42,7 +47,9 @@ class HpViewModel(private val apiHpCharactersRepository: ApiHpCharactersReposito
         viewModelScope.launch {
             _hpUiState.value = HpUiState.Loading
             _hpUiState.value = try {
-                val charactersList = apiHpCharactersRepository.getHpCharacters()
+                val charactersList = hpCharactersRepository.getHpCharactersFromApi()
+                val charactersDB = hpCharactersRepository.getAllHpCharactersStream()
+
                 HpUiState.Success(
                     "Success: ${charactersList.size} Harry Potter HpCharacters retrieved: " +
                             "${charactersList[0]}"
@@ -62,8 +69,8 @@ class HpViewModel(private val apiHpCharactersRepository: ApiHpCharactersReposito
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
                 val application = (this[APPLICATION_KEY] as HarryPotterApplication)
-                val apiHpCharactersRepository = application.container.apiHpCharactersRepository
-                HpViewModel(apiHpCharactersRepository = apiHpCharactersRepository)
+                val hpCharactersRepository = application.container.hpCharactersRepository
+                HpViewModel(hpCharactersRepository = hpCharactersRepository)
             }
         }
     }
