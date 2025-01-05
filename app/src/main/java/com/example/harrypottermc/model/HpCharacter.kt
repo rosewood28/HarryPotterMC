@@ -5,7 +5,6 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import com.example.harrypottermc.model.TypeConverter
 
 @Serializable
 data class Wand(
@@ -24,7 +23,7 @@ data class Wand(
 data class HpCharacter(
     @PrimaryKey val id: String,
     val name: String?,
-    @SerialName("alternate_names") val alternateNames: List<String>,
+    @SerialName("alternate_names") val alternateNames: List<String>, //StringListConverted for Room
     val species: String?,
     val gender: String?,
     val house: String?,
@@ -39,7 +38,7 @@ data class HpCharacter(
     @SerialName("hogwartsStudent") val hogwartsStudent: Boolean?,
     @SerialName("hogwartsStaff") val hogwartsStaff: Boolean?,
     val actor: String?,
-    @SerialName("alternate_actors") val alternateActors: List<String>,
+    @SerialName("alternate_actors") val alternateActors: List<String>, //StringListConverted for Room
     val alive: Boolean?,
     val image: String?
 )
