@@ -50,7 +50,7 @@ class HpViewModel(
                 //val charactersDB = hpCharactersRepository.getAllHpCharactersStream()
                 val characterDb = hpCharactersRepository.getHpCharacterStream(0)
                 HpUiState.Success(
-                    "SuccessDB: ${characterDb} Harry Potter HpCharacters retrieved: "
+                    "SuccessDB: ${characterDb} Harry Potter HpCharacters retrieved"
                 )
 //                HpUiState.Success(
 //                    "Success: ${charactersList.size} Harry Potter HpCharacters retrieved: " +

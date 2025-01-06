@@ -14,9 +14,9 @@ class HarryPotterApplication : Application() {
         super.onCreate()
         container = DefaultAppContainer(this)
 
-//        // Populate database with API data
-//        CoroutineScope(Dispatchers.IO).launch {
-//            container.hpCharactersRepository.refreshCharacters()
-//        }
+        // Populate database with API data
+        CoroutineScope(Dispatchers.IO).launch {
+            container.hpCharactersRepository.refreshCharacters()
+        }
     }
 }
