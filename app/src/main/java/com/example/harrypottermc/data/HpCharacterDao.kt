@@ -25,6 +25,9 @@ interface HpCharacterDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(character: HpCharacter)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAll(characters: List<HpCharacter>)
+
     @Update
     suspend fun update(character: HpCharacter)
 

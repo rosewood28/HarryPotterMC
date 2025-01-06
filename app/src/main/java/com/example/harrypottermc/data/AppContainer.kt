@@ -12,8 +12,6 @@ import retrofit2.Retrofit
  */
 interface AppContainer {
     val hpCharactersRepository: HpCharactersRepository
-//    val apiHpCharactersRepository: ApiHpCharactersRepository
-//    val roomHpCharactersRepository: RoomHpCharactersRepository
 }
 
 /**
@@ -28,10 +26,6 @@ class DefaultAppContainer(private val context: Context) : AppContainer {
     }
 
     private val hpCharacterDao = hpCharactersDatabase.hpCharacterDao()
-
-//    override val roomHpCharactersRepository: RoomHpCharactersRepository by lazy {
-//        OfflineHpCharactersRepository(hpCharacterDao)
-//    }
 
     //Retrofit setup
     private val baseUrl = "https://hp-api.herokuapp.com/"
@@ -92,6 +86,4 @@ class DefaultAppContainer(private val context: Context) : AppContainer {
 //    override val apiHpCharactersRepository: ApiHpCharactersRepository by lazy {
 //        NetworkHpCharactersRepository(retrofitService)
 //    }
-
-
 }

@@ -12,6 +12,16 @@ class HpCharactersRepository (
     override suspend fun getHpCharactersFromApi(): List<HpCharacter> = hpApiService.getHpCharacters()
 
     // Room (OfflineRepository)
+    suspend fun refreshCharacters() {
+        // Fetch characters from API
+        val apiCharacters = hpApiService.getHpCharacters()
+
+        // Insert characters into Room
+        hpCharacterDao.insertAll(apiCharacters)
+    }
+
+    suspend fun insertAllHpCharacters(characters: List<HpCharacter>) = hpCharacterDao.insertAll(characters)
+
     override fun getAllHpCharactersStream(): Flow<List<HpCharacter>> = hpCharacterDao.getAllHpCharacters()
 
     override fun getHpCharacterStream(id: Int): Flow<HpCharacter?> = hpCharacterDao.getHpCharacter(id)
@@ -22,12 +32,12 @@ class HpCharactersRepository (
 
     override suspend fun updateHpCharacter(item: HpCharacter) = hpCharacterDao.update(item)
 }
-/**
- * Repository that fetch character data list from HP-API.
- */
-interface ApiHpCharactersRepository {
-    suspend fun getHpCharactersFromApi(): List<HpCharacter>
-}
+///**
+// * Repository that fetch character data list from HP-API.
+// */
+//interface ApiHpCharactersRepository {
+//    suspend fun getHpCharactersFromApi(): List<HpCharacter>
+//}
 
 ///**
 // * Network Implementation of Repository that fetches character data list from HP-API.

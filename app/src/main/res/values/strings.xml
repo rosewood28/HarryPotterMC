@@ -2,4 +2,26 @@
     <string name="app_name">HarryPotterMC</string>
     <string name="loading">Loading...</string>
     <string name="failed_loading">Failed to load</string>
+    <string name="back_button">Back</string>
+
+    
+    <string name="attention">Attention</string>
+    <string name="delete">Delete</string>
+    <string name="delete_question">Are you sure you want to delete?</string>
+    <string name="no_hpCharacter_description">Oops!\nNo hpCharacters in the hpCharacters.\nTap + to add.</string>
+    <string name="edit_hpCharacter_title">Edit HpCharacter</string>
+    <string name="hpCharacter">HpCharacter</string>
+    <string name="hpCharacter_detail_title">HpCharacter Details</string>
+    <string name="hpCharacter_entry_title">Add HpCharacter</string>
+    <string name="hpCharacter_name_req">HpCharacter Name*</string>
+    <string name="hpCharacter_price_req">HpCharacter Price*</string>
+    <string name="no">No</string>
+    <string name="price">Price</string>
+    <string name="quantity_in_stock">Quantity in stock</string>
+    <string name="in_stock">%d in stock</string>
+    <string name="quantity_req">Quantity in Stock*</string>
+    <string name="save_action">Save</string>
+    <string name="sell">Sell</string>
+    <string name="yes">Yes</string>
+    <string name="required_fields">*required fields</string>
 </resources>

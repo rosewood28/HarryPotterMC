@@ -7,12 +7,9 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.harrypottermc.HarryPotterApplication
-import com.example.harrypottermc.data.ApiHpCharactersRepository
 import com.example.harrypottermc.data.HpCharactersRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import java.io.IOException
@@ -47,13 +44,18 @@ class HpViewModel(
         viewModelScope.launch {
             _hpUiState.value = HpUiState.Loading
             _hpUiState.value = try {
-                val charactersList = hpCharactersRepository.getHpCharactersFromApi()
+                //val charactersList = hpCharactersRepository.getHpCharactersFromApi()
+                hpCharactersRepository.refreshCharacters()
                 val charactersDB = hpCharactersRepository.getAllHpCharactersStream()
-
+                val characterDb = hpCharactersRepository.getHpCharacterStream(0)
                 HpUiState.Success(
-                    "Success: ${charactersList.size} Harry Potter HpCharacters retrieved: " +
-                            "${charactersList[0]}"
+                    "SuccessDB: ${characterDb} Harry Potter HpCharacters retrieved: "
                 )
+//                HpUiState.Success(
+//                    "Success: ${charactersList.size} Harry Potter HpCharacters retrieved: " +
+//                            "${charactersList[0]}"
+//                )
+
             } catch (e: IOException) {
                 HpUiState.Error
             } catch (e: HttpException) {
