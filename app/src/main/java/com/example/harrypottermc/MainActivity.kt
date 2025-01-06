@@ -9,6 +9,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import com.example.harrypottermc.ui.theme.HarryPotterMCTheme
 import com.example.harrypottermc.ui.HarryPotterApp
+import com.example.harrypottermc.ui.screns.AppNavigation
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,7 +20,8 @@ class MainActivity : ComponentActivity() {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                 ) {
-                    HarryPotterApp()
+                    /*HarryPotterApp()*/
+                    AppNavigation()
                 }
             }
         }

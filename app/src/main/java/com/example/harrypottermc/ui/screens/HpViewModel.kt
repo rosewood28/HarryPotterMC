@@ -44,9 +44,10 @@ class HpViewModel(
         viewModelScope.launch {
             _hpUiState.value = HpUiState.Loading
             _hpUiState.value = try {
+
                 //val charactersList = hpCharactersRepository.getHpCharactersFromApi()
                 hpCharactersRepository.refreshCharacters()
-                val charactersDB = hpCharactersRepository.getAllHpCharactersStream()
+                //val charactersDB = hpCharactersRepository.getAllHpCharactersStream()
                 val characterDb = hpCharactersRepository.getHpCharacterStream(0)
                 HpUiState.Success(
                     "SuccessDB: ${characterDb} Harry Potter HpCharacters retrieved: "

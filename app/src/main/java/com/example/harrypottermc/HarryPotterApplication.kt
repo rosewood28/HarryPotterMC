@@ -13,7 +13,7 @@ class HarryPotterApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         container = DefaultAppContainer(this)
-//
+
 //        // Populate database with API data
 //        CoroutineScope(Dispatchers.IO).launch {
 //            container.hpCharactersRepository.refreshCharacters()

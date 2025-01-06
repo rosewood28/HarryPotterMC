@@ -20,6 +20,9 @@ interface HpCharacterDao {
     @Query("SELECT * from characters WHERE id = :id")
     fun getHpCharacter(id: Int): Flow<HpCharacter>
 
+//    @Query("SELECT * FROM characters WHERE house = :house")
+//    suspend fun getCharactersByHouse(house: String): Flow<List<HpCharacter>>
+
     // Specify the conflict strategy as IGNORE, when the user tries to add an
     // existing HpCharacter into the database Room ignores the conflict.
     @Insert(onConflict = OnConflictStrategy.IGNORE)
