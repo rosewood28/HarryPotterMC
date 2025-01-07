@@ -102,24 +102,27 @@ fun ItemDetails(
                     )
                 )
             )
+            if (!item.gender.isNullOrEmpty()) {
+                ItemDetailsRow(
+                    labelResID = R.string.gender,
+                    itemDetail = item.gender.toString(),
+                    modifier = Modifier.padding(
+                        horizontal = dimensionResource(
+                            id = R.dimen.padding_medium
+                        )
+                    )
+                )
+            }
+            if (!item.species.isNullOrEmpty())
             ItemDetailsRow(
-                labelResID = R.string.gender,
-                itemDetail = item.gender.toString(),
+                labelResID = R.string.species,
+                itemDetail = item.species,
                 modifier = Modifier.padding(
                     horizontal = dimensionResource(
                         id = R.dimen.padding_medium
                     )
                 )
             )
-//            ItemDetailsRow(
-//                labelResID = R.string.price,
-//                itemDetail = item.,
-//                modifier = Modifier.padding(
-//                    horizontal = dimensionResource(
-//                        id = R.dimen.padding_medium
-//                    )
-//                )
-//            )
         }
     }
 }

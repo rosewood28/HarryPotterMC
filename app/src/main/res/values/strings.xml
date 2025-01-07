@@ -16,7 +16,7 @@
     <string name="hpCharacter_name_req">HpCharacter Name*</string>
     <string name="hpCharacter_price_req">HpCharacter Price*</string>
     <string name="no">No</string>
-    <string name="price">Price</string>
+    <string name="species">Species</string>
     <string name="gender">Gender</string>
     <string name="in_stock">%d in stock</string>
     <string name="quantity_req">Quantity in Stock*</string>
