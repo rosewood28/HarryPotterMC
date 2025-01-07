@@ -44,7 +44,7 @@ object HomeDestination : NavigationDestination {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
-    navigateToItemDetails: (Int) -> Unit,
+    navigateToItemDetails: (String) -> Unit,
     homeViewModel: HomeViewModel = viewModel(factory = AppViewModelProvider.Factory),
     modifier: Modifier = Modifier,
 ) {
@@ -75,7 +75,7 @@ fun HomeScreen(
 @Composable
 private fun HomeBody(
     itemList: List<HpCharacter>,
-    onItemClick: (Int) -> Unit,
+    onItemClick: (String) -> Unit,
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(0.dp),
 ) {
@@ -93,7 +93,7 @@ private fun HomeBody(
         } else {
             InventoryList(
                 itemList = itemList,
-                onItemClick = { onItemClick(it.id.toInt()) },
+                onItemClick = { onItemClick(it.id) },
                 contentPadding = contentPadding,
                 modifier = Modifier.padding(horizontal = dimensionResource(id = R.dimen.padding_small))
             )

@@ -4,7 +4,6 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.harrypottermc.ui.again.AppViewModelProvider
 import com.example.harrypottermc.ui.again.HomeDestination
 import com.example.harrypottermc.ui.again.HomeScreen
 import com.example.harrypottermc.ui.again.ItemDetailsDestination
@@ -24,7 +23,7 @@ fun InventoryNavHost(navController: NavHostController) {
             )
         }
         composable(route = ItemDetailsDestination.routeWithArgs) { backStackEntry ->
-            val itemId = backStackEntry.arguments?.getString(ItemDetailsDestination.itemIdArg)?.toInt() ?: 0
+            val itemId = backStackEntry.arguments?.getString(ItemDetailsDestination.itemIdArg) ?: 0
             ItemDetailsScreen(
                 navigateBack = { navController.popBackStack() }
             )

@@ -18,7 +18,7 @@ interface HpCharacterDao {
     fun getAllHpCharacters(): Flow<List<HpCharacter>>
 
     @Query("SELECT * from characters WHERE id = :id")
-    fun getHpCharacter(id: Int): Flow<HpCharacter>
+    fun getHpCharacter(id: String): Flow<HpCharacter>
 
 //    @Query("SELECT * FROM characters WHERE house = :house")
 //    suspend fun getCharactersByHouse(house: String): Flow<List<HpCharacter>>

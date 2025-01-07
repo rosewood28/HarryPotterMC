@@ -29,7 +29,7 @@ class ItemDetailsViewModel(
     val characterRepository: HpCharactersRepository,
 ) : ViewModel() {
 
-    private val characterId: Int = checkNotNull(savedStateHandle[ItemDetailsDestination.itemIdArg])
+    private val characterId: String = checkNotNull(savedStateHandle[ItemDetailsDestination.itemIdArg])
 
     /**
      * Holds the character details UI state. The data is retrieved from [CharacterRepository] and
@@ -63,7 +63,7 @@ data class ItemDetailsUiState(
  */
 fun HpCharacter.toCharacterDetails(): CharacterDetails {
     return CharacterDetails(
-        id = this.id.toInt(),
+        id = this.id,
         name = this.name.toString(),
         gender = this.gender.toString()
     )
@@ -71,7 +71,7 @@ fun HpCharacter.toCharacterDetails(): CharacterDetails {
 
 fun CharacterDetails.toCharacter(): HpCharacter {
     return HpCharacter(
-        id = this.id.toString(),
+        id = this.id,
         name = this.name,
         gender = this.gender,
         alternateNames = emptyList(),
@@ -98,7 +98,7 @@ fun CharacterDetails.toCharacter(): HpCharacter {
  * Data class for character details to be displayed in the UI.
  */
 data class CharacterDetails(
-    val id: Int = 0,
+    val id: String = "",
     val name: String = "",
     val gender: String = ""
 )

@@ -103,7 +103,7 @@ fun ItemDetails(
                 )
             )
             ItemDetailsRow(
-                labelResID = R.string.quantity_in_stock,
+                labelResID = R.string.gender,
                 itemDetail = item.gender.toString(),
                 modifier = Modifier.padding(
                     horizontal = dimensionResource(

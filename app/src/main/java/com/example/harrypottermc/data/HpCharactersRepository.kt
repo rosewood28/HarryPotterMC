@@ -24,7 +24,7 @@ class HpCharactersRepository (
 
     override fun getAllHpCharactersStream(): Flow<List<HpCharacter>> = hpCharacterDao.getAllHpCharacters()
 
-    override fun getHpCharacterStream(id: Int): Flow<HpCharacter?> = hpCharacterDao.getHpCharacter(id)
+    override fun getHpCharacterStream(id: String): Flow<HpCharacter?> = hpCharacterDao.getHpCharacter(id)
 
     override suspend fun insertHpCharacter(item: HpCharacter) = hpCharacterDao.insert(item)
 

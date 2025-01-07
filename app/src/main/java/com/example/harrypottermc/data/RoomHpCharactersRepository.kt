@@ -15,7 +15,7 @@ interface RoomHpCharactersRepository {
     /**
      * Retrieve an item from the given data source that matches with the [id].
      */
-    fun getHpCharacterStream(id: Int): Flow<HpCharacter?>
+    fun getHpCharacterStream(id: String): Flow<HpCharacter?>
 
     /**
      * Insert item in the data source
