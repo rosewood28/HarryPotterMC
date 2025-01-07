@@ -31,9 +31,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.harrypottermc.R
 import com.example.harrypottermc.model.HpCharacter
@@ -91,10 +93,10 @@ private fun HomeBody(
     ) {
         if (itemList.isEmpty()) {
             Text(
-                text = stringResource(R.string.no_item_description),
+                text = stringResource(R.string.empty_DB),
                 textAlign = TextAlign.Center,
-                style = MaterialTheme.typography.titleLarge,
-                modifier = Modifier.padding(contentPadding),
+                style = MaterialTheme.typography.titleLarge.plus(TextStyle(fontSize = 32.sp)),
+                modifier = Modifier.padding(PaddingValues(vertical = dimensionResource(id = R.dimen.padding_extra_large))),
             )
         } else {
             InventoryList(

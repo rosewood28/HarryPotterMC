@@ -24,7 +24,7 @@
     <string name="sell">Sell</string>
     <string name="yes">Yes</string>
     <string name="required_fields">*required fields</string>
-    <string name="no_item_description">Empty Room DB</string>
+    <string name="empty_DB">This app requires internet on first startup!</string>
     <string name="item_detail_title">Character Details</string>
     <string name="character">Character</string>
 </resources>

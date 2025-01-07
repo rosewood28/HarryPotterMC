@@ -49,7 +49,7 @@ class DefaultAppContainer(private val context: Context) : AppContainer {
      * DI implementation for HpCharacters repository
      */
     override val hpCharactersRepository: HpCharactersRepository by lazy {
-        HpCharactersRepository(hpCharacterDao ,retrofitService)
+        HpCharactersRepository(hpCharacterDao ,retrofitService, context)
     }
 //    // Room setup
 //    private val hpCharactersDatabase: HpCharactersDatabase by lazy {
