@@ -1,10 +1,8 @@
 package com.example.harrypottermc.ui.again
 
-import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -16,24 +14,22 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -72,8 +68,12 @@ fun HomeScreen(
         HomeBody(
             itemList = homeUiState.itemList,//listOf(),
             onItemClick = navigateToItemDetails,
-            modifier = modifier.fillMaxSize().verticalScroll(rememberScrollState()).height(50.dp),
+            modifier = modifier
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
+                .height(50.dp),
             contentPadding = innerPadding,
+            refreshFunc = { homeViewModel.refresh() },
         )
     }
 }
@@ -84,9 +84,8 @@ private fun HomeBody(
     onItemClick: (String) -> Unit,
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(0.dp),
+    refreshFunc: () -> Unit
 ) {
-    val scrollState = rememberScrollState()
-
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier,
@@ -98,6 +97,13 @@ private fun HomeBody(
                 style = MaterialTheme.typography.titleLarge.plus(TextStyle(fontSize = 32.sp)),
                 modifier = Modifier.padding(PaddingValues(vertical = dimensionResource(id = R.dimen.padding_extra_large))),
             )
+            Button(onClick = {
+                refreshFunc()
+            }) {
+                Text(
+                    text = "Tap to Refresh"
+                )
+            }
         } else {
             InventoryList(
                 itemList = itemList,

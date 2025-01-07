@@ -9,7 +9,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import com.example.harrypottermc.ui.HPApp
 import com.example.harrypottermc.ui.theme.HarryPotterMCTheme
-import com.example.harrypottermc.ui.HarryPotterApp
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

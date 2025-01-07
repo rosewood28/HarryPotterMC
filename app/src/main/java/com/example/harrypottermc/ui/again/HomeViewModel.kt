@@ -8,11 +8,13 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 
 /**
  * ViewModel to retrieve all items in the Room database.
  */
 class HomeViewModel(itemsRepository: HpCharactersRepository) : ViewModel() {
+    private val repo = itemsRepository
 
     /**
      * Holds home ui state. The list of items are retrieved from [HpCharactersRepository] and mapped to
@@ -25,6 +27,10 @@ class HomeViewModel(itemsRepository: HpCharactersRepository) : ViewModel() {
                 started = SharingStarted.WhileSubscribed(TIMEOUT_MILLIS),
                 initialValue = HomeUiState()
             )
+
+    fun refresh() {
+        viewModelScope.launch { repo.refreshCharacters() }
+    }
 
     companion object {
         private const val TIMEOUT_MILLIS = 5_000L

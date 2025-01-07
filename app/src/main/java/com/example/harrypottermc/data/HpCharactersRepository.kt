@@ -4,7 +4,6 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.util.Log
-import com.example.harrypottermc.HarryPotterApplication
 import com.example.harrypottermc.model.HpCharacter
 import com.example.harrypottermc.network.HPApiService
 import kotlinx.coroutines.flow.Flow
