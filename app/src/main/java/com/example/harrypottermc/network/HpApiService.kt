@@ -6,9 +6,9 @@ import retrofit2.http.GET
 /**
  * A public interface that exposes the [getHpCharacters] method
  */
-interface HPApiService {
+interface HpApiService {
     /**
-     * Returns a [List] of [HpCharacters] and this method can be called from a Coroutine.
+     * Returns a [List] of [HpCharacter] and this method can be called from a Coroutine.
      */
     @GET("/api/characters")
     suspend fun getHpCharacters(): List<HpCharacter>

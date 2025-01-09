@@ -1,43 +1,40 @@
-package com.example.harrypottermc.ui.again
+package com.example.harrypottermc.ui.characterdetails
 
-import androidx.compose.ui.text.capitalize
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.harrypottermc.R
 import com.example.harrypottermc.data.HpCharactersRepository
 import com.example.harrypottermc.model.HpCharacter
-import com.example.harrypottermc.model.Wand
-import com.example.harrypottermc.ui.again.navigation.NavigationDestination
+import com.example.harrypottermc.ui.navigation.NavigationDestination
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
-import java.util.Locale
 
 object CharacterDetailsDestination : NavigationDestination {
     override val route = "character_details"
     override val titleRes = R.string.character_detail_title
-    const val characterId = "characterId"
-    val routeWithCharacterId = "$route/{$characterId}"
+    const val CHARACTER_ID = "characterId"
+    val routeWithCharacterId = "$route/{$CHARACTER_ID}"
 }
 
 /**
- * ViewModel to retrieve a character from the [CharacterRepository]'s data source.
+ * ViewModel to retrieve a character from the [HpCharactersRepository]'s data source.
  */
 class CharacterDetailsViewModel(
     savedStateHandle: SavedStateHandle,
-    val characterRepository: HpCharactersRepository,
+    characterRepository: HpCharactersRepository,
 ) : ViewModel() {
 
-    private val characterId: String = checkNotNull(savedStateHandle[CharacterDetailsDestination.characterId])
+    private val characterId: String = checkNotNull(savedStateHandle[CharacterDetailsDestination.CHARACTER_ID])
 
     /**
-     * Holds the character details UI state. The data is retrieved from [CharacterRepository] and
+     * Holds the character details UI state. The data is retrieved from [HpCharactersRepository] and
      * mapped to the UI state.
      */
-    val uiState: StateFlow<CharacterDetailsUiState> =
+    val characterDetailsUiState: StateFlow<CharacterDetailsUiState> =
         characterRepository.getHpCharacterStream(characterId)
             .filterNotNull()
             .map { character ->
@@ -71,31 +68,6 @@ fun HpCharacter.toCharacterDetails(): CharacterDetails {
         altNames = this.alternateNames,
         actor = this.actor.toString(),
         species = this.species.toString()
-    )
-}
-
-fun CharacterDetails.toCharacter(): HpCharacter {
-    return HpCharacter(
-        id = this.id,
-        name = this.name,
-        gender = this.gender.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.ROOT) else it.toString() },
-        alternateNames = this.altNames,
-        species = this.species.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.ROOT) else it.toString() },
-        house= "",
-        dateOfBirth = "dateOfBirth",
-        yearOfBirth = 0,
-        wizard = true,
-        ancestry = "ancestry",
-        eyeColour = "eyeColour",
-        hairColour = "hairColour",
-        wand = Wand("", "", 0.0f),
-        patronus = "patronus",
-        hogwartsStudent = true,
-        hogwartsStaff = true,
-        actor = this.actor,
-        alternateActors = emptyList(),
-        alive = true,
-        image = "image",
     )
 }
 

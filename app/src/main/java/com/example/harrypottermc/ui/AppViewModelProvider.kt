@@ -1,4 +1,4 @@
-package com.example.harrypottermc.ui.again
+package com.example.harrypottermc.ui
 
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.createSavedStateHandle
@@ -6,6 +6,9 @@ import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.harrypottermc.HarryPotterApplication
+import com.example.harrypottermc.ui.characterdetails.CharacterDetailsViewModel
+import com.example.harrypottermc.ui.home.HomeViewModel
+import com.example.harrypottermc.ui.housecharacters.HouseCharactersViewModel
 
 object AppViewModelProvider {
     val Factory = viewModelFactory {

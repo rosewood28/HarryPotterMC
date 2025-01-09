@@ -5,12 +5,12 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.util.Log
 import com.example.harrypottermc.model.HpCharacter
-import com.example.harrypottermc.network.HPApiService
+import com.example.harrypottermc.network.HpApiService
 import kotlinx.coroutines.flow.Flow
 
 class HpCharactersRepository (
     private val hpCharacterDao: HpCharacterDao,
-    private val hpApiService: HPApiService,
+    private val hpApiService: HpApiService,
     private val context: Context,
     ) : RoomHpCharactersRepository,  ApiHpCharactersRepository {
     /** Fetches list of HpCharacters from HP-API*/
@@ -26,8 +26,6 @@ class HpCharactersRepository (
         // Insert characters into Room
         hpCharacterDao.insertAll(apiCharacters)
     }
-
-    suspend fun insertAllHpCharacters(characters: List<HpCharacter>) = hpCharacterDao.insertAll(characters)
 
     override fun getAllHpCharactersStream(): Flow<List<HpCharacter>> = hpCharacterDao.getAllHpCharacters()
 
@@ -68,22 +66,3 @@ class HpCharactersRepository (
         return false
     }
 }
-///**
-// * Repository that fetch character data list from HP-API.
-// */
-//interface ApiHpCharactersRepository {
-//    suspend fun getHpCharactersFromApi(): List<HpCharacter>
-//}
-
-///**
-// * Network Implementation of Repository that fetches character data list from HP-API.
-// */
-//class NetworkHpCharactersRepository (
-//    private val hpApiService: HPApiService
-//) : ApiHpCharactersRepository {
-//    /** Fetches list of HpCharacters from HP-API*/
-//    override suspend fun getHpCharacters(): List<HpCharacter> = hpApiService.getHpCharacters()
-//}
-
-
-

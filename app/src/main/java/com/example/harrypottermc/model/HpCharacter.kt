@@ -23,7 +23,7 @@ data class Wand(
 data class HpCharacter(
     @PrimaryKey val id: String,
     val name: String?,
-    @SerialName("alternate_names") val alternateNames: List<String>, //StringListConverted for Room
+    @SerialName("alternate_names") val alternateNames: List<String>,
     val species: String?,
     val gender: String?,
     val house: String?,
@@ -38,7 +38,7 @@ data class HpCharacter(
     @SerialName("hogwartsStudent") val hogwartsStudent: Boolean?,
     @SerialName("hogwartsStaff") val hogwartsStaff: Boolean?,
     val actor: String?,
-    @SerialName("alternate_actors") val alternateActors: List<String>, //StringListConverted for Room
+    @SerialName("alternate_actors") val alternateActors: List<String>,
     val alive: Boolean?,
     val image: String?
 )

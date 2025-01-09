@@ -1,4 +1,4 @@
-package com.example.harrypottermc.ui.again.navigation
+package com.example.harrypottermc.ui.navigation
 
 /**
  * Interface to describe the navigation destinations for the app

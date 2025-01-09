@@ -1,18 +1,18 @@
-package com.example.harrypottermc.ui.again.navigation
+package com.example.harrypottermc.ui.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.harrypottermc.ui.again.CharacterDetailsDestination
-import com.example.harrypottermc.ui.again.CharacterDetailsScreen
-import com.example.harrypottermc.ui.again.HomeDestination
-import com.example.harrypottermc.ui.again.HomeScreen
-import com.example.harrypottermc.ui.again.HouseCharactersDestination
-import com.example.harrypottermc.ui.again.HouseCharactersScreen
+import com.example.harrypottermc.ui.characterdetails.CharacterDetailsDestination
+import com.example.harrypottermc.ui.characterdetails.CharacterDetailsScreen
+import com.example.harrypottermc.ui.home.HomeDestination
+import com.example.harrypottermc.ui.home.HomeScreen
+import com.example.harrypottermc.ui.housecharacters.HouseCharactersDestination
+import com.example.harrypottermc.ui.housecharacters.HouseCharactersScreen
 
 @Composable
-fun InventoryNavHost(navController: NavHostController) {
+fun HarryPotterAppNavHost(navController: NavHostController) {
     NavHost(
         navController = navController,
         startDestination = HomeDestination.route

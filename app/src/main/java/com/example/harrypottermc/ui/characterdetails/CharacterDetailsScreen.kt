@@ -1,4 +1,4 @@
-package com.example.harrypottermc.ui.again
+package com.example.harrypottermc.ui.characterdetails
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement
@@ -33,14 +33,15 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.harrypottermc.R
-import com.example.harrypottermc.model.HpCharacter
+import com.example.harrypottermc.ui.AppViewModelProvider
 
 @Composable
 fun CharacterDetailsScreen(
     modifier: Modifier = Modifier,
     viewModel: CharacterDetailsViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
-    val uiState by viewModel.uiState.collectAsState()
+    val uiState by viewModel.characterDetailsUiState.collectAsState()
+
     Scaffold(
         modifier = modifier,
     ) { innerPadding ->
@@ -67,7 +68,7 @@ private fun ItemDetailsBody(
         verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.padding_medium))
     ) {
         ItemDetails(
-            item = characterDetailsUiState.characterDetails.toCharacter(),
+            item = characterDetailsUiState.characterDetails,
             modifier = Modifier.fillMaxWidth()
         )
     }
@@ -75,7 +76,7 @@ private fun ItemDetailsBody(
 
 @Composable
 fun ItemDetails(
-    item: HpCharacter, modifier: Modifier = Modifier
+    item: CharacterDetails, modifier: Modifier = Modifier
 ) {
     Card(
         modifier = modifier,
@@ -92,7 +93,7 @@ fun ItemDetails(
         ) {
             ItemDetailsRow(
                 labelResID = R.string.character,
-                itemDetail = item.name.toString(),
+                itemDetail = item.name,
                 modifier = Modifier.padding(
                     horizontal = dimensionResource(
                         id = R.dimen.padding_medium
@@ -100,10 +101,10 @@ fun ItemDetails(
                 )
             )
 
-            if (item.alternateNames.isNotEmpty()) {
+            if (item.altNames.isNotEmpty()) {
                 ItemDetailsMultiRow(
                     labelResID = R.string.altNames,
-                    itemDetail = item.alternateNames,
+                    itemDetail = item.altNames,
                     modifier = Modifier
                         .padding(
                             horizontal = dimensionResource(
@@ -114,7 +115,7 @@ fun ItemDetails(
                 )
             }
 
-            if (!item.gender.isNullOrEmpty()) {
+            if (item.gender.isNotEmpty()) {
                 ItemDetailsRow(
                     labelResID = R.string.gender,
                     itemDetail = item.gender.toString(),
@@ -126,7 +127,7 @@ fun ItemDetails(
                 )
             }
 
-            if (!item.species.isNullOrEmpty()) {
+            if (item.species.isNotEmpty()) {
                 ItemDetailsRow(
                     labelResID = R.string.species,
                     itemDetail = item.species,
@@ -138,7 +139,7 @@ fun ItemDetails(
                 )
             }
 
-            if (!item.actor.isNullOrEmpty())
+            if (item.actor.isNotEmpty())
                 ItemDetailsRow(
                     labelResID = R.string.actor,
                     itemDetail = item.actor,

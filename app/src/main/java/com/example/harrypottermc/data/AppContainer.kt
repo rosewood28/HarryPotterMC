@@ -1,7 +1,7 @@
 package com.example.harrypottermc.data
 
 import android.content.Context
-import com.example.harrypottermc.network.HPApiService
+import com.example.harrypottermc.network.HpApiService
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
@@ -41,8 +41,8 @@ class DefaultAppContainer(private val context: Context) : AppContainer {
     /**
      * Retrofit service object for creating api calls
      */
-    private val retrofitService: HPApiService by lazy {
-        retrofit.create(HPApiService::class.java)
+    private val retrofitService: HpApiService by lazy {
+        retrofit.create(HpApiService::class.java)
     }
 
     /**
@@ -51,39 +51,4 @@ class DefaultAppContainer(private val context: Context) : AppContainer {
     override val hpCharactersRepository: HpCharactersRepository by lazy {
         HpCharactersRepository(hpCharacterDao ,retrofitService, context)
     }
-//    // Room setup
-//    private val hpCharactersDatabase: HpCharactersDatabase by lazy {
-//        HpCharactersDatabase.getDatabase(context)
-//    }
-//
-//    private val hpCharacterDao = hpCharactersDatabase.hpCharacterDao()
-//
-//    override val roomHpCharactersRepository: RoomHpCharactersRepository by lazy {
-//        OfflineHpCharactersRepository(hpCharacterDao)
-//    }
-//
-//    //Retrofit setup
-//    private val baseUrl = "https://hp-api.herokuapp.com/"
-//
-//    /**
-//     * Use the Retrofit builder to build a retrofit object using a kotlinx.serialization converter
-//     */
-//    private val retrofit: Retrofit = Retrofit.Builder()
-//        .addConverterFactory(Json.asConverterFactory("application/json".toMediaType()))
-//        .baseUrl(baseUrl)
-//        .build()
-//
-//    /**
-//     * Retrofit service object for creating api calls
-//     */
-//    private val retrofitService: HPApiService by lazy {
-//        retrofit.create(HPApiService::class.java)
-//    }
-//
-//    /**
-//     * DI implementation for HpCharacters repository
-//     */
-//    override val apiHpCharactersRepository: ApiHpCharactersRepository by lazy {
-//        NetworkHpCharactersRepository(retrofitService)
-//    }
 }

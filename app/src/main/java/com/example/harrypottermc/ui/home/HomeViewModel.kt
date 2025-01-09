@@ -1,4 +1,4 @@
-package com.example.harrypottermc.ui.again
+package com.example.harrypottermc.ui.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

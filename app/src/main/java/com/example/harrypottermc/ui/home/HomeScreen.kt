@@ -1,4 +1,4 @@
-package com.example.harrypottermc.ui.again
+package com.example.harrypottermc.ui.home
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -16,7 +16,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -33,7 +32,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.harrypottermc.R
-import com.example.harrypottermc.ui.again.navigation.NavigationDestination
+import com.example.harrypottermc.ui.AppViewModelProvider
+import com.example.harrypottermc.ui.navigation.NavigationDestination
 
 object HomeDestination : NavigationDestination {
     override val route = "home"
@@ -43,14 +43,12 @@ object HomeDestination : NavigationDestination {
 /**
  * Entry route for Home screen
  */
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
     navigateToCharactersBelongingToHouse: (String) -> Unit,
     homeViewModel: HomeViewModel = viewModel(factory = AppViewModelProvider.Factory),
     modifier: Modifier = Modifier,
 ) {
-
     val housesNamesUiState by homeViewModel.housesNamesUiState.collectAsState()
 
     Scaffold { innerPadding ->
