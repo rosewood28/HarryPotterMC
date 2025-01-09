@@ -2,7 +2,9 @@ package com.example.harrypottermc.ui.characterdetails
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.calculateEndPadding
@@ -127,6 +129,18 @@ fun ItemDetails(
                 )
             }
 
+            if (item.dob.isNotEmpty()) {
+                ItemDetailsRow(
+                    labelResID = R.string.dob,
+                    itemDetail = item.dob,
+                    modifier = Modifier.padding(
+                        horizontal = dimensionResource(
+                            id = R.dimen.padding_medium
+                        )
+                    )
+                )
+            }
+
             if (item.species.isNotEmpty()) {
                 ItemDetailsRow(
                     labelResID = R.string.species,
@@ -139,16 +153,134 @@ fun ItemDetails(
                 )
             }
 
-            if (item.actor.isNotEmpty())
+            if (item.eyes.isNotEmpty()) {
                 ItemDetailsRow(
-                    labelResID = R.string.actor,
-                    itemDetail = item.actor,
+                    labelResID = R.string.eyes,
+                    itemDetail = item.eyes,
                     modifier = Modifier.padding(
                         horizontal = dimensionResource(
                             id = R.dimen.padding_medium
                         )
                     )
                 )
+            }
+
+            if (item.hair.isNotEmpty()) {
+                ItemDetailsRow(
+                    labelResID = R.string.hair,
+                    itemDetail = item.hair,
+                    modifier = Modifier.padding(
+                        horizontal = dimensionResource(
+                            id = R.dimen.padding_medium
+                        )
+                    )
+                )
+            }
+
+            if (item.ancestry.isNotEmpty()) {
+                ItemDetailsRow(
+                    labelResID = R.string.ancestry,
+                    itemDetail = item.ancestry,
+                    modifier = Modifier.padding(
+                        horizontal = dimensionResource(
+                            id = R.dimen.padding_medium
+                        )
+                    )
+                )
+            }
+
+            if (item.patronus.isNotEmpty()) {
+                ItemDetailsRow(
+                    labelResID = R.string.patronus,
+                    itemDetail = item.patronus,
+                    modifier = Modifier.padding(
+                        horizontal = dimensionResource(
+                            id = R.dimen.padding_medium
+                        )
+                    )
+                )
+            }
+
+            if (item.actors.isNotEmpty()) {
+                ItemDetailsMultiRow(
+                    labelResID = R.string.actor,
+                    itemDetail = item.actors,
+                    modifier = Modifier
+                        .padding(
+                            horizontal = dimensionResource(
+                                id = R.dimen.padding_medium
+                            )
+                        )
+                        .heightIn(max = 500.dp)
+                )
+            }
+        }
+    }
+
+    val wandDet = item.wand
+
+    if (!wandDet.noWand) {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(PaddingValues(vertical = dimensionResource(id = R.dimen.padding_small))),
+            contentAlignment = Alignment.Center
+        ) {
+            Text(
+                text = "Wand",
+                textAlign = TextAlign.Center,
+                style = MaterialTheme.typography.headlineSmall
+            )
+        }
+        Card(
+            modifier = modifier,
+            colors = CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.primaryContainer,
+                contentColor = MaterialTheme.colorScheme.onPrimaryContainer
+            )
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(dimensionResource(id = R.dimen.padding_medium)),
+                verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.padding_medium))
+            ) {
+                if (wandDet.wood.isNotEmpty()) {
+                    ItemDetailsRow(
+                        labelResID = R.string.wood,
+                        itemDetail = wandDet.wood,
+                        modifier = Modifier.padding(
+                            horizontal = dimensionResource(
+                                id = R.dimen.padding_medium
+                            )
+                        )
+                    )
+                }
+
+                if (wandDet.core.isNotEmpty()) {
+                    ItemDetailsRow(
+                        labelResID = R.string.core,
+                        itemDetail = wandDet.core,
+                        modifier = Modifier.padding(
+                            horizontal = dimensionResource(
+                                id = R.dimen.padding_medium
+                            )
+                        )
+                    )
+                }
+
+                if (wandDet.length.isNotEmpty()) {
+                    ItemDetailsRow(
+                        labelResID = R.string.length,
+                        itemDetail = wandDet.length,
+                        modifier = Modifier.padding(
+                            horizontal = dimensionResource(
+                                id = R.dimen.padding_medium
+                            )
+                        )
+                    )
+                }
+            }
         }
     }
 }
