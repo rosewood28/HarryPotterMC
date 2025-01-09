@@ -21,18 +21,18 @@ object HouseCharactersDestination : NavigationDestination {
 
 class HouseCharactersViewModel(
     savedStateHandle: SavedStateHandle,
-    val characterRepository: HpCharactersRepository,
+    characterRepository: HpCharactersRepository,
 ) : ViewModel() {
 
     private val houseName: String = checkNotNull(savedStateHandle[HouseCharactersDestination.houseName])
 
     val houseCharactersUiState: StateFlow<HouseCharactersUiState> =
         characterRepository.getHpCharacterByHouseNameStream(houseName)
-            .map { HouseCharactersUiState(it) }
+            .map { HouseCharactersUiState(it, houseName) }
             .stateIn(
                 scope = viewModelScope,
                 started = SharingStarted.WhileSubscribed(TIMEOUT_MILLIS),
-                initialValue = HouseCharactersUiState(emptyList())
+                initialValue = HouseCharactersUiState(emptyList(), houseName)
             )
 
     companion object {
@@ -40,4 +40,4 @@ class HouseCharactersViewModel(
     }
 }
 
-data class HouseCharactersUiState(val characters: List<HpCharacter>)
+data class HouseCharactersUiState(val characters: List<HpCharacter>, val houseName: String)

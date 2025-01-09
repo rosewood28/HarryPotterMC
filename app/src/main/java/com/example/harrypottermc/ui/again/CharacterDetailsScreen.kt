@@ -1,7 +1,5 @@
 package com.example.harrypottermc.ui.again
 
-import androidx.compose.material3.ExperimentalMaterial3Api
-
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -10,7 +8,11 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
@@ -21,16 +23,18 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.harrypottermc.R
 import com.example.harrypottermc.model.HpCharacter
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CharacterDetailsScreen(
     modifier: Modifier = Modifier,
@@ -95,6 +99,21 @@ fun ItemDetails(
                     )
                 )
             )
+
+            if (item.alternateNames.isNotEmpty()) {
+                ItemDetailsMultiRow(
+                    labelResID = R.string.altNames,
+                    itemDetail = item.alternateNames,
+                    modifier = Modifier
+                        .padding(
+                            horizontal = dimensionResource(
+                                id = R.dimen.padding_medium
+                            )
+                        )
+                        .heightIn(max = 300.dp)
+                )
+            }
+
             if (!item.gender.isNullOrEmpty()) {
                 ItemDetailsRow(
                     labelResID = R.string.gender,
@@ -106,16 +125,19 @@ fun ItemDetails(
                     )
                 )
             }
-            if (!item.species.isNullOrEmpty())
-            ItemDetailsRow(
-                labelResID = R.string.species,
-                itemDetail = item.species,
-                modifier = Modifier.padding(
-                    horizontal = dimensionResource(
-                        id = R.dimen.padding_medium
+
+            if (!item.species.isNullOrEmpty()) {
+                ItemDetailsRow(
+                    labelResID = R.string.species,
+                    itemDetail = item.species,
+                    modifier = Modifier.padding(
+                        horizontal = dimensionResource(
+                            id = R.dimen.padding_medium
+                        )
                     )
                 )
-            )
+            }
+
             if (!item.actor.isNullOrEmpty())
                 ItemDetailsRow(
                     labelResID = R.string.actor,
@@ -138,6 +160,28 @@ private fun ItemDetailsRow(
         Text(text = stringResource(labelResID))
         Spacer(modifier = Modifier.weight(1f))
         Text(text = itemDetail, fontWeight = FontWeight.Bold)
+    }
+}
+
+@Composable
+private fun ItemDetailsMultiRow(
+    @StringRes labelResID: Int, itemDetail: List<String>, modifier: Modifier = Modifier
+) {
+    Row(modifier = modifier) {
+        Text(text = stringResource(labelResID))
+        Spacer(modifier = Modifier.weight(1f))
+        LazyColumn(
+            Modifier.wrapContentWidth(Alignment.End)
+        ) {
+            items(items = itemDetail, key = { it }) { item ->
+                Text(
+                    text = item,
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.End,
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
+        }
     }
 }
 

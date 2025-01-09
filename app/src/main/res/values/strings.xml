@@ -23,7 +23,7 @@
     <string name="save_action">Save</string>
     <string name="sell">Sell</string>
     <string name="yes">Yes</string>
-    <string name="required_fields">*required fields</string>
+    <string name="altNames">Also Known As</string>
     <string name="empty_DB">This app requires internet on first startup!</string>
     <string name="character_detail_title">Character Details</string>
     <string name="house_characters_title">House Characters</string>

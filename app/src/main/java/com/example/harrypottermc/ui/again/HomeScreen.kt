@@ -83,7 +83,7 @@ private fun HomeBody(
             text = "Harry Potter\nUniverse",
             textAlign = TextAlign.Center,
             style = MaterialTheme.typography.headlineLarge,
-            modifier = Modifier.padding(PaddingValues(vertical = dimensionResource(id = R.dimen.padding_extra_large)))
+            modifier = Modifier.padding(PaddingValues(vertical = dimensionResource(id = R.dimen.titlePad)))
         )
 
         if (housesNames.isEmpty()) {

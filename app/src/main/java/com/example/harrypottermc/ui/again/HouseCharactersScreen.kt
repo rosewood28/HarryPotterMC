@@ -25,6 +25,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.harrypottermc.R
@@ -47,6 +48,7 @@ fun HouseCharactersScreen(
             )
         } else {
             HouseCharactersBody(
+                houseName = houseCharactersUiState.houseName,
                 characters = houseCharactersUiState.characters,
                 onItemClick = navigateToCharacterDetails,
                 modifier = modifier
@@ -61,6 +63,7 @@ fun HouseCharactersScreen(
 
 @Composable
 private fun HouseCharactersBody(
+    houseName: String,
     characters: List<HpCharacter>,
     onItemClick: (String) -> Unit,
     modifier: Modifier = Modifier,
@@ -70,6 +73,13 @@ private fun HouseCharactersBody(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier,
     ) {
+        Text(
+            text = houseName,
+            textAlign = TextAlign.Center,
+            style = MaterialTheme.typography.headlineLarge,
+            modifier = Modifier.padding(PaddingValues(top = dimensionResource(id = R.dimen.titlePad), bottom = dimensionResource(id = R.dimen.padding_large)))
+        )
+
         CharacterList(
             characters = characters,
             onItemClick = { onItemClick(it.id) },
