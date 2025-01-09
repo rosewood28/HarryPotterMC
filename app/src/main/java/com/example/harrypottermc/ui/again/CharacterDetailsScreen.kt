@@ -116,6 +116,16 @@ fun ItemDetails(
                     )
                 )
             )
+            if (!item.actor.isNullOrEmpty())
+                ItemDetailsRow(
+                    labelResID = R.string.actor,
+                    itemDetail = item.actor,
+                    modifier = Modifier.padding(
+                        horizontal = dimensionResource(
+                            id = R.dimen.padding_medium
+                        )
+                    )
+                )
         }
     }
 }

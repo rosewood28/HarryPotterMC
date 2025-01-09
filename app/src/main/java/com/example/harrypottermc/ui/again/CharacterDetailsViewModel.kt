@@ -1,5 +1,6 @@
 package com.example.harrypottermc.ui.again
 
+import androidx.compose.ui.text.capitalize
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -13,6 +14,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import java.util.Locale
 
 object CharacterDetailsDestination : NavigationDestination {
     override val route = "character_details"
@@ -65,7 +67,10 @@ fun HpCharacter.toCharacterDetails(): CharacterDetails {
     return CharacterDetails(
         id = this.id,
         name = this.name.toString(),
-        gender = this.gender.toString()
+        gender = this.gender.toString(),
+        altNames = this.alternateNames,
+        actor = this.actor.toString(),
+        species = this.species.toString()
     )
 }
 
@@ -73,9 +78,9 @@ fun CharacterDetails.toCharacter(): HpCharacter {
     return HpCharacter(
         id = this.id,
         name = this.name,
-        gender = this.gender,
-        alternateNames = emptyList(),
-        species = "",
+        gender = this.gender.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.ROOT) else it.toString() },
+        alternateNames = this.altNames,
+        species = this.species.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.ROOT) else it.toString() },
         house= "",
         dateOfBirth = "dateOfBirth",
         yearOfBirth = 0,
@@ -87,7 +92,7 @@ fun CharacterDetails.toCharacter(): HpCharacter {
         patronus = "patronus",
         hogwartsStudent = true,
         hogwartsStaff = true,
-        actor = "actor",
+        actor = this.actor,
         alternateActors = emptyList(),
         alive = true,
         image = "image",
@@ -100,5 +105,8 @@ fun CharacterDetails.toCharacter(): HpCharacter {
 data class CharacterDetails(
     val id: String = "",
     val name: String = "",
-    val gender: String = ""
+    val gender: String = "",
+    val altNames: List<String> = emptyList(),
+    val actor: String = "",
+    val species: String = ""
 )
