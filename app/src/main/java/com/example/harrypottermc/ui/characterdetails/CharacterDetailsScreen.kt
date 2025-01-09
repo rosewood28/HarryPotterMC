@@ -118,7 +118,7 @@ fun ItemDetails(
             if (item.gender.isNotEmpty()) {
                 ItemDetailsRow(
                     labelResID = R.string.gender,
-                    itemDetail = item.gender.toString(),
+                    itemDetail = item.gender,
                     modifier = Modifier.padding(
                         horizontal = dimensionResource(
                             id = R.dimen.padding_medium

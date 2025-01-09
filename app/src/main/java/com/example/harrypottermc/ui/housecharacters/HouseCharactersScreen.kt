@@ -29,7 +29,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.harrypottermc.R
-import com.example.harrypottermc.model.HpCharacter
 import com.example.harrypottermc.ui.AppViewModelProvider
 
 @Composable
@@ -41,7 +40,7 @@ fun HouseCharactersScreen(
     val houseCharactersUiState by houseCharactersViewModel.houseCharactersUiState.collectAsState()
 
     Scaffold { innerPadding ->
-        if (houseCharactersUiState.characters.isEmpty()) {
+        if (houseCharactersUiState.houseCharactersDetails.isEmpty()) {
             Text(
                 text = "No characters available for this house.",
                 style = MaterialTheme.typography.bodyLarge,
@@ -50,7 +49,7 @@ fun HouseCharactersScreen(
         } else {
             HouseCharactersBody(
                 houseName = houseCharactersUiState.houseName,
-                characters = houseCharactersUiState.characters,
+                characters = houseCharactersUiState.houseCharactersDetails,
                 onItemClick = navigateToCharacterDetails,
                 modifier = modifier
                     .fillMaxSize()
@@ -65,7 +64,7 @@ fun HouseCharactersScreen(
 @Composable
 private fun HouseCharactersBody(
     houseName: String,
-    characters: List<HpCharacter>,
+    characters: List<HouseCharacterDetails>,
     onItemClick: (String) -> Unit,
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(0.dp),
@@ -92,8 +91,8 @@ private fun HouseCharactersBody(
 
 @Composable
 private fun CharacterList(
-    characters: List<HpCharacter>,
-    onItemClick: (HpCharacter) -> Unit,
+    characters: List<HouseCharacterDetails>,
+    onItemClick: (HouseCharacterDetails) -> Unit,
     contentPadding: PaddingValues,
     modifier: Modifier = Modifier
 ) {
@@ -113,7 +112,7 @@ private fun CharacterList(
 
 @Composable
 private fun CharacterItem(
-    item: HpCharacter, modifier: Modifier = Modifier
+    item: HouseCharacterDetails, modifier: Modifier = Modifier
 ) {
     Card(
         modifier = modifier, elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
@@ -126,12 +125,12 @@ private fun CharacterItem(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(
-                    text = item.name.toString(),
+                    text = item.name,
                     style = MaterialTheme.typography.titleLarge,
                 )
                 Spacer(Modifier.weight(1f))
                 Text(
-                    text = item.gender.toString(),
+                    text = item.gender,
                     style = MaterialTheme.typography.titleMedium
                 )
             }

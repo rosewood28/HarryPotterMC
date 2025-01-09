@@ -24,12 +24,14 @@ class HouseCharactersViewModel(
     characterRepository: HpCharactersRepository,
 ) : ViewModel() {
 
-    private val houseName: String = checkNotNull(savedStateHandle[HouseCharactersDestination.HOUSE_NAME])
+    private val houseName: String =
+        checkNotNull(savedStateHandle[HouseCharactersDestination.HOUSE_NAME])
 
     val houseCharactersUiState: StateFlow<HouseCharactersUiState> =
         characterRepository.getHpCharacterByHouseNameStream(houseName)
-            .map { HouseCharactersUiState(it, houseName) }
-            .stateIn(
+            .map { characters ->
+                HouseCharactersUiState(characters.map { it.toHouseCharacterDetails() }, houseName)
+            }.stateIn(
                 scope = viewModelScope,
                 started = SharingStarted.WhileSubscribed(TIMEOUT_MILLIS),
                 initialValue = HouseCharactersUiState(emptyList(), houseName)
@@ -43,4 +45,24 @@ class HouseCharactersViewModel(
 /**
  * Ui State for HouseCharactersScreen
  */
-data class HouseCharactersUiState(val characters: List<HpCharacter>, val houseName: String)
+data class HouseCharactersUiState(val houseCharactersDetails: List<HouseCharacterDetails>, val houseName: String)
+
+/**
+ * Extension function to convert [Character] to [HouseCharacterDetails].
+ */
+fun HpCharacter.toHouseCharacterDetails(): HouseCharacterDetails {
+    return HouseCharacterDetails(
+        id = this.id,
+        name = this.name.toString(),
+        gender = this.gender.toString(),
+    )
+}
+
+/**
+ * Data class for house characters to be displayed in the UI.
+ */
+data class HouseCharacterDetails(
+    val id: String = "",
+    val name: String = "",
+    val gender: String = ""
+)
