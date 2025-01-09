@@ -31,7 +31,16 @@ class HpCharactersRepository (
 
     override fun getAllHpCharactersStream(): Flow<List<HpCharacter>> = hpCharacterDao.getAllHpCharacters()
 
+    fun getAllHousesNamesStream(): Flow<List<String>> = hpCharacterDao.getAllHpHouses()
+
     override fun getHpCharacterStream(id: String): Flow<HpCharacter?> = hpCharacterDao.getHpCharacter(id)
+
+    fun getHpCharacterByHouseNameStream(houseName: String): Flow<List<HpCharacter>> =
+        if (houseName == "Unassigned")
+            hpCharacterDao.getHpCharacterByHouseName("")
+        else
+            hpCharacterDao.getHpCharacterByHouseName(houseName)
+
 
     override suspend fun insertHpCharacter(item: HpCharacter) = hpCharacterDao.insert(item)
 

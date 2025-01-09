@@ -3,7 +3,6 @@ package com.example.harrypottermc.ui.again
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.harrypottermc.data.HpCharactersRepository
-import com.example.harrypottermc.model.HpCharacter
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
@@ -16,17 +15,14 @@ import kotlinx.coroutines.launch
 class HomeViewModel(itemsRepository: HpCharactersRepository) : ViewModel() {
     private val repo = itemsRepository
 
-    /**
-     * Holds home ui state. The list of items are retrieved from [HpCharactersRepository] and mapped to
-     * [HomeUiState]
-     */
-    val homeUiState: StateFlow<HomeUiState> =
-        itemsRepository.getAllHpCharactersStream().map { HomeUiState(it) }
-            .stateIn(
-                scope = viewModelScope,
-                started = SharingStarted.WhileSubscribed(TIMEOUT_MILLIS),
-                initialValue = HomeUiState()
-            )
+    val housesNamesUiState: StateFlow<HousesNamesUiState> =
+        itemsRepository.getAllHousesNamesStream().map { housesList ->
+            HousesNamesUiState(housesList.map { it.ifEmpty { "Unassigned" } })
+        }.stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(TIMEOUT_MILLIS),
+            initialValue = HousesNamesUiState()
+        )
 
     fun refresh() {
         viewModelScope.launch { repo.refreshCharacters() }
@@ -40,4 +36,4 @@ class HomeViewModel(itemsRepository: HpCharactersRepository) : ViewModel() {
 /**
  * Ui State for HomeScreen
  */
-data class HomeUiState(val itemList: List<HpCharacter> = listOf())
+data class HousesNamesUiState(val housesNames: List<String> = listOf())

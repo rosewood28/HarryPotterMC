@@ -10,13 +10,21 @@ import com.example.harrypottermc.HarryPotterApplication
 object AppViewModelProvider {
     val Factory = viewModelFactory {
         initializer {
-            ItemDetailsViewModel(
-                this.createSavedStateHandle(),
-                harryPotterApplication().container.hpCharactersRepository)
+            HomeViewModel(harryPotterApplication().container.hpCharactersRepository)
         }
 
         initializer {
-            HomeViewModel(harryPotterApplication().container.hpCharactersRepository)
+            HouseCharactersViewModel(
+                this.createSavedStateHandle(),
+                harryPotterApplication().container.hpCharactersRepository
+            )
+        }
+
+        initializer {
+            CharacterDetailsViewModel(
+                this.createSavedStateHandle(),
+                harryPotterApplication().container.hpCharactersRepository
+            )
         }
     }
 }

@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -34,7 +33,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.harrypottermc.R
-import com.example.harrypottermc.model.HpCharacter
 import com.example.harrypottermc.ui.again.navigation.NavigationDestination
 
 object HomeDestination : NavigationDestination {
@@ -48,39 +46,30 @@ object HomeDestination : NavigationDestination {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
-    navigateToItemDetails: (String) -> Unit,
+    navigateToCharactersBelongingToHouse: (String) -> Unit,
     homeViewModel: HomeViewModel = viewModel(factory = AppViewModelProvider.Factory),
     modifier: Modifier = Modifier,
 ) {
 
-    // Observe the StateFlow from the ViewModel
-    val homeUiState by homeViewModel.homeUiState.collectAsState()
+    val housesNamesUiState by homeViewModel.housesNamesUiState.collectAsState()
 
-    Scaffold(
-//        topBar = {
-//            InventoryTopAppBar(
-//                title = stringResource(HomeDestination.titleRes),
-//                canNavigateBack = false,
-//                scrollBehavior = scrollBehavior
-//            )
-//        },
-    ) { innerPadding ->
+    Scaffold { innerPadding ->
         HomeBody(
-            itemList = homeUiState.itemList,//listOf(),
-            onItemClick = navigateToItemDetails,
+            housesNames = housesNamesUiState.housesNames,
+            onItemClick = navigateToCharactersBelongingToHouse,
             modifier = modifier
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
                 .height(50.dp),
             contentPadding = innerPadding,
-            refreshFunc = { homeViewModel.refresh() },
+            refreshFunc = { homeViewModel.refresh() }
         )
     }
 }
 
 @Composable
 private fun HomeBody(
-    itemList: List<HpCharacter>,
+    housesNames: List<String>,
     onItemClick: (String) -> Unit,
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(0.dp),
@@ -90,7 +79,14 @@ private fun HomeBody(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier,
     ) {
-        if (itemList.isEmpty()) {
+        Text(
+            text = "Harry Potter\nUniverse",
+            textAlign = TextAlign.Center,
+            style = MaterialTheme.typography.headlineLarge,
+            modifier = Modifier.padding(PaddingValues(vertical = dimensionResource(id = R.dimen.padding_extra_large)))
+        )
+
+        if (housesNames.isEmpty()) {
             Text(
                 text = stringResource(R.string.empty_DB),
                 textAlign = TextAlign.Center,
@@ -105,9 +101,15 @@ private fun HomeBody(
                 )
             }
         } else {
-            InventoryList(
-                itemList = itemList,
-                onItemClick = { onItemClick(it.id) },
+            Text(
+                text = "Please select a house to see its assigned characters",
+                textAlign = TextAlign.Center,
+                style = MaterialTheme.typography.headlineMedium,
+                modifier = Modifier.padding(horizontal = 20.dp)
+            )
+            HousesList(
+                housesList = housesNames,
+                onItemClick = { onItemClick(it) },
                 contentPadding = contentPadding,
                 modifier = Modifier.padding(horizontal = dimensionResource(id = R.dimen.padding_small))
             )
@@ -116,9 +118,9 @@ private fun HomeBody(
 }
 
 @Composable
-private fun InventoryList(
-    itemList: List<HpCharacter>,
-    onItemClick: (HpCharacter) -> Unit,
+private fun HousesList(
+    housesList: List<String>,
+    onItemClick: (String) -> Unit,
     contentPadding: PaddingValues,
     modifier: Modifier = Modifier
 ) {
@@ -126,8 +128,8 @@ private fun InventoryList(
         modifier = modifier,
         contentPadding = contentPadding
     ) {
-        items(items = itemList, key = { it.id }) { item ->
-            InventoryItem(item = item,
+        items(items = housesList, key = { it }) { item ->
+            HouseItem(item = item,
                 modifier = Modifier
                     .padding(dimensionResource(id = R.dimen.padding_small))
                     .clickable { onItemClick(item) })
@@ -136,8 +138,8 @@ private fun InventoryList(
 }
 
 @Composable
-private fun InventoryItem(
-    item: HpCharacter, modifier: Modifier = Modifier
+private fun HouseItem(
+    item: String, modifier: Modifier = Modifier
 ) {
     Card(
         modifier = modifier, elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
@@ -147,22 +149,14 @@ private fun InventoryItem(
             verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.padding_small))
         ) {
             Row(
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center
             ) {
                 Text(
-                    text = item.name.toString(),
+                    text = item,
                     style = MaterialTheme.typography.titleLarge,
                 )
-                Spacer(Modifier.weight(1f))
-                Text(
-                    text = item.gender.toString(),
-                    style = MaterialTheme.typography.titleMedium
-                )
             }
-//            Text(
-//                text = stringResource(R.string.in_stock, item.quantity),
-//                style = MaterialTheme.typography.titleMedium
-//            )
         }
     }
 }
