@@ -20,6 +20,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.dimensionResource
@@ -31,24 +32,16 @@ import com.example.harrypottermc.model.HpCharacter
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ItemDetailsScreen(
-    navigateBack: () -> Unit,
+fun CharacterDetailsScreen(
     modifier: Modifier = Modifier,
-    viewModel: ItemDetailsViewModel = viewModel(factory = AppViewModelProvider.Factory)
+    viewModel: CharacterDetailsViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
-    val uiState = viewModel.uiState.collectAsState()
+    val uiState by viewModel.uiState.collectAsState()
     Scaffold(
-//        topBar = {
-//            InventoryTopAppBar(
-//                title = stringResource(ItemDetailsDestination.titleRes),
-//                canNavigateBack = true,
-//                navigateUp = navigateBack
-//            )
-//        },
         modifier = modifier,
     ) { innerPadding ->
         ItemDetailsBody(
-            itemDetailsUiState = uiState.value,
+            characterDetailsUiState = uiState,
             modifier = Modifier
                 .padding(
                     start = innerPadding.calculateStartPadding(LocalLayoutDirection.current),
@@ -62,7 +55,7 @@ fun ItemDetailsScreen(
 
 @Composable
 private fun ItemDetailsBody(
-    itemDetailsUiState: ItemDetailsUiState,
+    characterDetailsUiState: CharacterDetailsUiState,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -70,7 +63,7 @@ private fun ItemDetailsBody(
         verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.padding_medium))
     ) {
         ItemDetails(
-            item = itemDetailsUiState.itemDetails.toCharacter(),
+            item = characterDetailsUiState.characterDetails.toCharacter(),
             modifier = Modifier.fillMaxWidth()
         )
     }

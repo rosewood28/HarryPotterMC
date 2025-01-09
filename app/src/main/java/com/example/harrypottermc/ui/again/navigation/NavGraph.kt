@@ -4,10 +4,12 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.harrypottermc.ui.again.CharacterDetailsDestination
+import com.example.harrypottermc.ui.again.CharacterDetailsScreen
 import com.example.harrypottermc.ui.again.HomeDestination
 import com.example.harrypottermc.ui.again.HomeScreen
-import com.example.harrypottermc.ui.again.ItemDetailsDestination
-import com.example.harrypottermc.ui.again.ItemDetailsScreen
+import com.example.harrypottermc.ui.again.HouseCharactersDestination
+import com.example.harrypottermc.ui.again.HouseCharactersScreen
 
 @Composable
 fun InventoryNavHost(navController: NavHostController) {
@@ -17,16 +19,26 @@ fun InventoryNavHost(navController: NavHostController) {
     ) {
         composable(route = HomeDestination.route) {
             HomeScreen(
-                navigateToItemDetails = { itemId ->
-                    navController.navigate("${ItemDetailsDestination.route}/$itemId")
+                navigateToCharactersBelongingToHouse = { houseName ->
+                    navController.navigate("${HouseCharactersDestination.route}/$houseName")
                 }
             )
         }
-        composable(route = ItemDetailsDestination.routeWithArgs) { backStackEntry ->
-            val itemId = backStackEntry.arguments?.getString(ItemDetailsDestination.itemIdArg) ?: 0
-            ItemDetailsScreen(
-                navigateBack = { navController.popBackStack() }
+
+        composable(
+            route = HouseCharactersDestination.routeWithArgs
+        ) {
+            HouseCharactersScreen(
+                navigateToCharacterDetails = { characterId ->
+                    navController.navigate("${CharacterDetailsDestination.route}/$characterId")
+                },
             )
+        }
+
+        composable(
+            route = CharacterDetailsDestination.routeWithCharacterId,
+        ) {
+            CharacterDetailsScreen()
         }
     }
 }
